@@ -6,8 +6,7 @@ Make sure to install the postgres module from puppetlabs/postgresql.
 
 To create a database named "gis" with the user "gis_user" do:
 
-		include postgis2
-
-		postgis2::database{ "gis":
-			owner => "gis_user"
-		}
+	include postgis2
+	postgis2::database{ "gis":
+		owner => "gis_user"
+	}
