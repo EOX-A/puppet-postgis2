@@ -1,8 +1,14 @@
 =======================
-PostGis Puppet module
+PostGIS 2 Puppet module
 =======================
 
-This module is provided to you by Camptocamp_.
+forked from https://github.com/camptocamp/puppet-postgis. Needs postgresql 9.0/9.1/9.2. Debian only.
 
-.. _Camptocamp: http://www.camptocamp.com/
+Usage Example
+---------------
 
+include postgis2
+
+postgis2::database{ "gis":
+	owner => "gis_user"
+}

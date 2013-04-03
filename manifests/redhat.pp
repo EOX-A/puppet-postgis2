@@ -1,3 +1,3 @@
-class postgis::redhat {
+class postgis2::redhat {
   fail "${::operatingsystem} not supported yet!"
 }

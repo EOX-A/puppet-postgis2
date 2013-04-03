@@ -2,24 +2,43 @@
 
 ==Definition: postgis::database
 
-Create a new PostgreSQL PostGIS database
+Create a new PostgreSQL PostGIS database and a corresponding user. Manually done because the puppetforge postgres module
+does not support templates when creating new databases
 
 */
-define postgis::database(
-  $ensure=present, 
-  $owner=false, 
-  $encoding=false,
-  $source=false, 
-  $overwrite=false) {
 
-  postgresql::database{$name:
-    ensure => $ensure,
-    owner => $owner,
-    encoding => $encoding,
-    template => "template_postgis",
-    source => $source,
-    overwrite => $overwrite,
-    require => Exec["create postgis_template"],
+# Class: name
+#
+#
+
+
+define postgis2::database(
+  $owner = postgres,
+  ) {
+
+  exec { "create user":
+    command => "createuser ${owner} -R -D -S",
+    user => postgres,
+    unless  => "psql -c 'select * from pg_roles;' | grep '\\b\\${owner}\\b'",
+    require => [
+      Exec["create template_postgis"],
+      Package["postgis"], 
+      Service["postgresql"]
+    ],
   }
 
-}
+  exec {"create postgis database":
+    command => "createdb ${name} --username postgres --owner ${owner} --template template_postgis",
+    unless  => "psql -l | grep '\\b\\${name}\\b'",
+    user => postgres,
+
+    require => [
+      Exec["create user"], 
+      Package["postgis"], 
+      Service["postgresql"]
+    ] ,
+    }
+  }
+
+
+
