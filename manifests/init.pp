@@ -13,6 +13,9 @@ class postgis2 {
     'Debian': {
        $ostype = 'debian'
     }
+    'RedHat': {
+       $ostype = 'redhat'
+    }
     default: { fail "Unsupported OS family ${::osfamily}" }
   }
 

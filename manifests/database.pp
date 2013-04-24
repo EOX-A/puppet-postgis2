@@ -20,6 +20,7 @@ define postgis2::database(
     command => "createuser ${owner} -R -D -S",
     user => postgres,
     unless  => "psql -c 'select * from pg_roles;' | grep '\\b\\${owner}\\b'",
+    path    => [ "/usr/bin", "/bin"],
     require => [
       Exec["create template_postgis"],
       Package["postgis"], 
@@ -31,7 +32,7 @@ define postgis2::database(
     command => "createdb ${name} --username postgres --owner ${owner} --template template_postgis",
     unless  => "psql -l | grep '\\b\\${name}\\b'",
     user => postgres,
-
+    path    => [ "/usr/bin", "/bin"],
     require => [
       Exec["create user"], 
       Package["postgis"], 
