@@ -7,7 +7,7 @@ PG_VERSION=$(psql -c 'select version();' | grep -E -o "PostgreSQL ([0-9]*\.[0-9]
 
 case "$PG_VERSION" in
 '8.4')
-PG_POSTGIS="/usr/share/pgsql/contrib/postgis.sql"
+PG_POSTGIS="/usr/share/pgsql/contrib/postgis-64.sql"
 PG_SPATIAL_REF="/usr/share/pgsql/contrib/spatial_ref_sys.sql"
 ;;
 *)
